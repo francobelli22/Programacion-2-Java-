@@ -1,0 +1,54 @@
+package planteldeportivo;
+
+public class Jugador {
+    private final String nombre;
+    private final String dorsal;
+    private int goles;
+
+    public Jugador(String nombre, string dorsal, int goles){
+        if (nombre == null ||nombre.isBlank()) {
+            System.out.println("Aviso nombre nulo o blanco. se le asigna (Sin nombre).");
+            this.nombre = "Sin nombre";
+        } else {
+            this.nombre = nombre;   
+        }
+
+        if (dorsal <= 00) {
+            System.out.println("dorsal invaldo. se le asigna 99");
+            this.dorsal = 99;
+        } else {
+            this.dorsal = dorsal;
+        }
+
+        if (goles < 0) {
+            System.out.println("goles negativos"+ nombre +" se le asigna 0" );
+            this.goles = 0;
+        } else {
+            this.goles = goles;
+        }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getdorsal() {
+        return dorsal;
+    }
+
+    public int getgoles() {
+        return goles;
+    }
+
+    public void anotargoles(int cantidad) {
+        if (cantidad > 0) {
+            goles += cantidad;
+        }
+    }
+
+    @Override
+    public String toString (){
+        return "#" + dorsal + " " + nombre +" ("+ goles + "goles).";
+    }
+}
+
