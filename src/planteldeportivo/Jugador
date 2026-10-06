@@ -2,26 +2,26 @@ package planteldeportivo;
 
 public class Jugador {
     private final String nombre;
-    private final String dorsal;
+    private final int dorsal;
     private int goles;
 
-    public Jugador(String nombre, string dorsal, int goles){
-        if (nombre == null ||nombre.isBlank()) {
-            System.out.println("Aviso nombre nulo o blanco. se le asigna (Sin nombre).");
+    public Jugador(String nombre, int dorsal, int goles) {
+        if (nombre == null || nombre.isBlank()) {
+            System.out.println("Aviso: nombre nulo o en blanco. Se asigna \"Sin nombre\".");
             this.nombre = "Sin nombre";
         } else {
-            this.nombre = nombre;   
+            this.nombre = nombre;
         }
 
-        if (dorsal <= 00) {
-            System.out.println("dorsal invaldo. se le asigna 99");
+        if (dorsal <= 0) {
+            System.out.println("Aviso: dorsal inválido (" + dorsal + ") para " + this.nombre + ". Se asigna 99.");
             this.dorsal = 99;
         } else {
             this.dorsal = dorsal;
         }
 
         if (goles < 0) {
-            System.out.println("goles negativos"+ nombre +" se le asigna 0" );
+            System.out.println("Aviso: goles negativos (" + goles + ") para " + this.nombre + ". Se asigna 0.");
             this.goles = 0;
         } else {
             this.goles = goles;
@@ -32,23 +32,22 @@ public class Jugador {
         return nombre;
     }
 
-    public String getdorsal() {
+    public int getDorsal() {
         return dorsal;
     }
 
-    public int getgoles() {
+    public int getGoles() {
         return goles;
     }
 
-    public void anotargoles(int cantidad) {
+    public void anotarGoles(int cantidad) {
         if (cantidad > 0) {
             goles += cantidad;
         }
     }
 
     @Override
-    public String toString (){
-        return "#" + dorsal + " " + nombre +" ("+ goles + "goles).";
+    public String toString() {
+        return "#" + dorsal + " " + nombre + " (" + goles + " goles)";
     }
 }
-
