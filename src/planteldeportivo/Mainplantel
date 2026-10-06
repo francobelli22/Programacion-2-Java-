@@ -1,0 +1,79 @@
+package planteldeportivo;
+
+public class MainPlantel {
+    public static void main(String[] args) {
+
+        // ===== 1. Inicialización en dos pasos =====
+        System.out.println("=== 1. Verificación de inicialización en dos pasos ===");
+        // Paso 1: new Jugador[3] solo reserva 3 casillas (referencias), todas en null.
+        // Paso 2 (no hecho todavía): crear cada objeto con new Jugador(...) y guardarlo en la casilla.
+        // Si llamáramos prueba[0].getNombre() ahora, estaríamos pidiéndole el nombre a "nada":
+        // no hay ningún objeto en esa casilla, y Java lanzaría NullPointerException.
+        Jugador[] prueba = new Jugador[3];
+        System.out.println("Array de prueba reservado con new Jugador[3].");
+        System.out.println("Casilla prueba[0]: " + prueba[0]);
+        System.out.println("(Llamar a prueba[0].getNombre() causaría NullPointerException)");
+
+        // ===== 2. Creación del plantel e inserción =====
+        System.out.println();
+        System.out.println("=== 2. Creación del plantel e inserción ===");
+        Plantel plantel = new Plantel(3);
+        plantel.agregar(new Jugador("Lionel Messi", 10, 15));
+        plantel.agregar(new Jugador("Lautaro Martínez", 7, 8));
+        plantel.agregar(new Jugador("Rodrigo De Paul", 5, 3));
+        plantel.agregar(new Jugador("Ángel Di María", 11, 11)); // dispara la duplicación
+
+        // ===== 3. Búsqueda lineal =====
+        System.out.println();
+        System.out.println("=== 3. Búsqueda lineal ===");
+        Jugador encontrado = plantel.buscarPorDorsal(10);
+        if (encontrado != null) {
+            System.out.println("Búsqueda dorsal 10: Encontrado -> " + encontrado);
+        } else {
+            System.out.println("Búsqueda dorsal 10: No encontrado");
+        }
+
+        Jugador inexistente = plantel.buscarPorDorsal(99);
+        if (inexistente != null) {
+            System.out.println("Búsqueda dorsal 99: Encontrado -> " + inexistente);
+        } else {
+            System.out.println("Búsqueda dorsal 99: No encontrado (resultado null protegido)");
+        }
+
+        // ===== 4. Ordenamiento manual =====
+        System.out.println();
+        System.out.println("=== 4. Ordenamiento manual por goles (descendente) ===");
+        plantel.ordenarPorGolesDescendente();
+        System.out.println("Plantel ordenado por rendimiento:");
+        plantel.listar();
+
+        // ===== 5. Eliminación =====
+        System.out.println();
+        System.out.println("=== 5. Eliminación de jugador (dorsal 7) ===");
+        boolean eliminado = plantel.eliminar(7);
+        if (eliminado) {
+            System.out.println("Baja confirmada para dorsal 7.");
+            System.out.println("Última casilla liberada a null (prevención de fuga de memoria).");
+        } else {
+            System.out.println("No se encontró el dorsal 7.");
+        }
+        System.out.println("Plantel actualizado (cantidad: " + plantel.getCantidad() + "):");
+        plantel.listar();
+
+        // ===== 6. Aliasing y copia defensiva =====
+        System.out.println();
+        System.out.println("=== 6. Aliasing y copia defensiva ===");
+        Jugador referenciaMessi = plantel.buscarPorDorsal(10);
+        if (referenciaMessi != null) {
+            System.out.println("Referencia obtenida para " + referenciaMessi.getNombre() + ". Anotando 2 goles...");
+            referenciaMessi.anotarGoles(2);
+            System.out.println("El cambio se refleja en el plantel: " + plantel.buscarPorDorsal(10));
+        }
+
+        Jugador[] copia = plantel.getJugadores();
+        copia[0] = null; // vaciamos una casilla de la COPIA
+        if (plantel.buscarPorDorsal(10) != null) {
+            System.out.println("Array obtenido con getJugadores() es una copia defensiva independiente.");
+        }
+    }
+}
